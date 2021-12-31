@@ -5,8 +5,8 @@
     "scripts": {
         "webp": "webpack --config webpack.config.js",
         "roll": "rollup -c",
-        "webp watch": "webpack --config webpack.config.js --watch",
-        "roll watch": "rollup -c --watch",
+        "webp-watch": "webpack --config webpack.config.js --watch",
+        "roll-watch": "rollup -c 'rollup.config.js' --watch",
         "lint": "eslint ./src"
     },
     "author": "",
