@@ -6,11 +6,12 @@ const normalizePhoto = (height, width) => {
 };
 
 const makeImageStyles = (photoUrls, initImage) => {
-    const scale = 0.2;
+    const scale = 0.5;
     // Normalize photos to 360px width
     let { height, width } = initImage;
     [height, width] = normalizePhoto(height, width);
-
+    console.log(`${height}, ${width}`);
+    
     const imageStyles = photoUrls.map((url) => {
         // eslint-disable-next-line max-len
         return `background: url(${url}); font-size: ${height * scale}px; padding: ${Math.floor(height * scale / 4)}px ${Math.floor(width * scale / 2)}px; background-size: ${width * scale}px ${height * scale}px; display: block !important; margin: 10px 0; background-repeat: no-repeat; background-position: center; background-size: contain;`;
