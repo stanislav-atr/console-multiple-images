@@ -1,4 +1,4 @@
-### smol-template
-- eslint (air-bnb)
-- rollup & webpack
-- .gitignore preset
+### todo
+- get rid of eval
+- logging dimensions?
+- scaling and normalizing photos
