@@ -13,4 +13,4 @@ const testUrls = [
     'noImage',
     'https://cdn.pixabay.com/photo/2019/02/06/17/09/snake-3979601_1280.jpg',
 ];
-consoleImages(testUrls);
+consoleImages(testUrls, { firstN: 3 });

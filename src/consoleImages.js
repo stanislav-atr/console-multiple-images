@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-operators, no-console, no-eval */
-const normalizePhoto = (height, width) => {
+const normalizeImage = (height, width) => {
     const desiredWidth = 360;
     const factor = width / desiredWidth;
     return [height / factor, width / factor];
@@ -8,8 +8,8 @@ const normalizePhoto = (height, width) => {
 const makeImageStyles = (imageStorage) => {
     const scale = 0.1;
 
-    // Normalize photos to 360px width
-    // [height, width] = normalizePhoto(height, width);
+    // Normalize iamges to 360px width
+    // [height, width] = normalizeImage(height, width);
 
     const imageStyles = imageStorage.map((image) => {
         let { src, height, width } = image;
@@ -42,33 +42,33 @@ const makeImageStyles = (imageStorage) => {
     return imageStyles;
 };
 
-const makePayloadArray = (imageStyles) => {
-    // Log all available photos but no more than 6 (to avoid line breaks, see scale)
-    // const photosQuantity = photoUrls.length > 6 ? 6 : photoUrls.length;
-    const photosQuantity = imageStyles.length;
-
+const makePayloadArray = (imageStyles, imagesQuantity) => {
     let payloadArray = [];
     let formatString = '';
     const directive = '%c ';
 
-    // Generate directive string according to photos quantity
-    for (let i = 0; i < photosQuantity; i++) {
+    // Generate directive string according to images quantity
+    for (let i = 0; i < imagesQuantity; i++) {
         formatString = formatString.concat(directive);
     }
     payloadArray.push(formatString);
 
     // Populate payloadArray with images' styles
-    for (let i = 0; i < photosQuantity; i++) {
+    for (let i = 0; i < imagesQuantity; i++) {
         payloadArray.push(imageStyles[i]);
     }
 
     return payloadArray;
 };
 
-const consoleImages = (imageUrls) => {
+const consoleImages = (imagesInput, options = { firstN: false}) => {
+    // Log all available images or first N images according to options
+    const imagesQuantity = typeof options.firstN === 'number' ? options.firstN : imagesInput.length;
+
     // Populate storage with image objects
+    const urls = imagesInput.slice(0, imagesQuantity);
     let imageStorage = [];
-    for (const url of imageUrls) {
+    for (const url of urls) {
         const image = new Image();
         image.src = url;
         imageStorage.push(image);
@@ -87,7 +87,7 @@ const consoleImages = (imageUrls) => {
             // Generate array of images' styles
             const imageStyles = makeImageStyles(imageStorage);
             // Generate payload array
-            const payloadArray = makePayloadArray(imageStyles);
+            const payloadArray = makePayloadArray(imageStyles, imagesQuantity);
             // Render in console
             console.log.apply(console, payloadArray);
         });
