@@ -6,11 +6,11 @@ const normalizePhoto = (height, width) => {
 };
 
 const makeImageStyles = (photoUrls, initImage) => {
-    const scale = 0.5;
+    const scale = 0.3;
     // Normalize photos to 360px width
     let { height, width } = initImage;
     [height, width] = normalizePhoto(height, width);
-    console.log(`${height}, ${width}`);
+    //console.log(`${height}, ${width}`);
     
     const imageStyles = photoUrls.map((url) => {
         // eslint-disable-next-line max-len
@@ -19,41 +19,43 @@ const makeImageStyles = (photoUrls, initImage) => {
     return imageStyles;
 };
 
-const makePayloadString = (photoUrls, imageStyles) => {
+const makePayloadArray = (imageStyles) => {
     // Log all available photos but no more than 6 (to avoid line breaks, see scale)
-    const photosQuantity = photoUrls.length > 6 ? 6 : photoUrls.length;
+    // const photosQuantity = photoUrls.length > 6 ? 6 : photoUrls.length;
+    const photosQuantity = imageStyles.length;
 
-    // Result e.g: "%c "+"%c "+"%c "
-    let payloadFirstHalf = '"%c "';
-    for (let i = 0; i < photosQuantity - 1; i += 1) {
-        payloadFirstHalf = payloadFirstHalf.concat('+"%c "');
+    let payloadArray = [];
+    let formatString = '';
+    const directive = '%c ';
+
+    // Generate directive string according to photos quantity
+    for (let i = 0; i < photosQuantity; i++) {
+        formatString = formatString.concat(directive);
+    }
+    payloadArray.push(formatString);
+
+    // Populate payloadArray with images' styles
+    for (let i = 0; i < photosQuantity; i++) {
+        payloadArray.push(imageStyles[i]);
     }
 
-    // Result e.g: ,"imgStyleStr0","imgStyleStr1","imgStyleStr2"
-    let payloadSecondHalf = '';
-    for (let i = 0; i < photosQuantity; i += 1) {
-        payloadSecondHalf = payloadSecondHalf.concat(`, "${imageStyles[i]}"`); // Test this!
-    }
-
-    // Result e.g: console.log("%c " + "%c " + "%c ", "imgStyleStr0","imgStyleStr1","imgStyleStr2");
-    const renderingString = `console.log(${payloadFirstHalf + payloadSecondHalf});`;
-    return renderingString;
+    return payloadArray;
 };
 
-const consoleImages = (photoUrls) => {
+const consoleImages = (imageUrls) => {
     const initImage = new Image();
 
     initImage.onload = () => {
         // Generate array of images' styles
-        const imageStyles = makeImageStyles(photoUrls, initImage);
-        // Generate rendering string for future eval() call
-        const renderingString = makePayloadString(photoUrls, imageStyles);
+        const imageStyles = makeImageStyles(imageUrls, initImage);
+        // Generate payload array
+        const payloadArray = makePayloadArray(imageStyles);
         // Render in console
-        eval(renderingString);
+        console.log.apply(console, payloadArray);
     };
 
     // Get the first photo as initializator for others to render
-    [initImage.src] = photoUrls;
+    [initImage.src] = imageUrls;
 };
 
 export default consoleImages;
