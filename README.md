@@ -1,7 +1,6 @@
 ### todo
 - ~~get rid of eval~~
-- logging dimensions?
-- scaling and normalizing photos
-- first N photos in log
+- scaling and normalizing images
+- first N images in log
 - independent onloads
-- line-by-line logging
+  - print dimensions for each image, text should be aligned with each corresponding image
