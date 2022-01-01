@@ -1,6 +1,6 @@
 ### todo
 - ~~get rid of eval~~
-- scaling and normalizing(width and height) images
+- ~~normalizing(by width) and scaling images~~
 - ~~first N images in log~~
 - ~~handle image not loading when making styles~~
 - ~~independent images' objects~~

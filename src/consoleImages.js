@@ -1,16 +1,21 @@
 /* eslint-disable no-mixed-operators, no-console, no-eval */
-const normalizeImage = (height, width) => {
-    const desiredWidth = 360;
-    const factor = width / desiredWidth;
+const normalizeImage = (height, width, normalize) => {
+    // Don't modify the image if no param is present
+    if (!normalize) {
+        return [height, width];
+    }
+    const newWidth = normalize;
+    // Set width to the desired value keeping image's aspect ratio
+    const factor = width / newWidth;
     return [height / factor, width / factor];
 };
 
-const makeImageStyles = (imageStorage, scale) => {
+const makeImageStyles = (imageStorage, scale, normalize) => {
     const imageStyles = imageStorage.map((image) => {
         let { src, height, width } = image;
 
         // Normalize images to 360px width
-        //[height, width] = normalizeImage(height, width);
+        [height, width] = normalizeImage(height, width, normalize);
 
         if (!height && !width) {
             const fallbackUrl = 'https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/src/failed_to_load.svg';
@@ -57,8 +62,8 @@ const makePayloadArray = (imageStyles, imagesQuantity) => {
     return payloadArray;
 };
 
-const consoleImages = (imagesInput, { firstN = false, scale = 1, } = options) => {
-    // Log all available images or first N images according to options
+const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = false } = {}) => {
+    // Log all images or first N images available according to options
     const imagesQuantity = typeof firstN === 'number' ? firstN : imagesInput.length;
 
     // Populate storage with image objects
@@ -81,7 +86,7 @@ const consoleImages = (imagesInput, { firstN = false, scale = 1, } = options) =>
         }))
         .then(() => {
             // Generate array of images' styles
-            const imageStyles = makeImageStyles(imageStorage, scale);
+            const imageStyles = makeImageStyles(imageStorage, scale, normalize);
             // Generate payload array
             const payloadArray = makePayloadArray(imageStyles, imagesQuantity);
             // Render in console
