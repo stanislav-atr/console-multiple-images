@@ -12,5 +12,7 @@ const testUrls = [
     'https://cdn.pixabay.com/photo/2015/11/29/13/08/kingfisher-1068684_1280.jpg',
     'noImage',
     'https://cdn.pixabay.com/photo/2019/02/06/17/09/snake-3979601_1280.jpg',
+    'https://cdn.pixabay.com/photo/2020/02/15/12/39/green-tree-snake-4850878_1280.jpg',
+    'https://static.abcteach.com/free_preview/b/bird02lowres_p.png',
 ];
-consoleImages(testUrls, { firstN: 3 });
+consoleImages(testUrls, { firstN: 15, scale: 0.3, });

@@ -5,37 +5,33 @@ const normalizeImage = (height, width) => {
     return [height / factor, width / factor];
 };
 
-const makeImageStyles = (imageStorage) => {
-    const scale = 0.1;
-
-    // Normalize iamges to 360px width
-    // [height, width] = normalizeImage(height, width);
-
+const makeImageStyles = (imageStorage, scale) => {
     const imageStyles = imageStorage.map((image) => {
         let { src, height, width } = image;
+
+        // Normalize images to 360px width
+        //[height, width] = normalizeImage(height, width);
+
         if (!height && !width) {
             const fallbackUrl = 'https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/src/failed_to_load.svg';
             return `
             background: url(${fallbackUrl});
-            padding: ${300 * scale}px ${300 * scale}px;
-            background-size: ${300 * scale}px ${300 * scale}px;
+            padding: ${50 * scale}px ${50 * scale}px;
             display: block !important;
-            margin: 10px 0;
+            margin: 5px 5px;
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
+            border: 1px solid red;
         `;
         }
-        // eslint-disable-next-line max-len
         return `
             background: url(${src});
-            font-size: ${height * scale}px;
-            padding: ${Math.floor(height * scale / 4)}px ${Math.floor(width * scale / 2)}px;
-            background-size: 5000px ${height * scale}px;
-            display: block !important;
-            margin: 10px 0;
+            font-size: ${scale}px;
+            padding: ${height * scale / 4}px ${width * scale / 4}px;
+            margin: 5px 5px;
             background-repeat: no-repeat;
-            background-position: center;
+            border: 1px solid red;
             background-size: contain;
         `;
     });
@@ -61,9 +57,9 @@ const makePayloadArray = (imageStyles, imagesQuantity) => {
     return payloadArray;
 };
 
-const consoleImages = (imagesInput, options = { firstN: false}) => {
+const consoleImages = (imagesInput, { firstN = false, scale = 1, } = options) => {
     // Log all available images or first N images according to options
-    const imagesQuantity = typeof options.firstN === 'number' ? options.firstN : imagesInput.length;
+    const imagesQuantity = typeof firstN === 'number' ? firstN : imagesInput.length;
 
     // Populate storage with image objects
     const urls = imagesInput.slice(0, imagesQuantity);
@@ -85,7 +81,7 @@ const consoleImages = (imagesInput, options = { firstN: false}) => {
         }))
         .then(() => {
             // Generate array of images' styles
-            const imageStyles = makeImageStyles(imageStorage);
+            const imageStyles = makeImageStyles(imageStorage, scale);
             // Generate payload array
             const payloadArray = makePayloadArray(imageStyles, imagesQuantity);
             // Render in console
