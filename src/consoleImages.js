@@ -15,10 +15,29 @@ const makeImageStyles = (imageStorage) => {
         let { src, height, width } = image;
         if (!height && !width) {
             const fallbackUrl = 'https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/src/failed_to_load.svg';
-            return `background: url(${fallbackUrl}); padding: ${300 * scale}px ${300 * scale}px; background-size: ${300 * scale}px ${300 * scale}px; display: block !important; margin: 10px 0; background-repeat: no-repeat; background-position: center; background-size: contain;`;
+            return `
+            background: url(${fallbackUrl});
+            padding: ${300 * scale}px ${300 * scale}px;
+            background-size: ${300 * scale}px ${300 * scale}px;
+            display: block !important;
+            margin: 10px 0;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        `;
         }
         // eslint-disable-next-line max-len
-        return `background: url(${src}); font-size: ${height * scale}px; padding: ${Math.floor(height * scale / 4)}px ${Math.floor(width * scale / 2)}px; background-size: ${width * scale}px ${height * scale}px; display: block !important; margin: 10px 0; background-repeat: no-repeat; background-position: center; background-size: contain;`;
+        return `
+            background: url(${src});
+            font-size: ${height * scale}px;
+            padding: ${Math.floor(height * scale / 4)}px ${Math.floor(width * scale / 2)}px;
+            background-size: 5000px ${height * scale}px;
+            display: block !important;
+            margin: 10px 0;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        `;
     });
     return imageStyles;
 };
