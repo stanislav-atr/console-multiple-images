@@ -4,3 +4,4 @@
 - scaling and normalizing photos
 - first N photos in log
 - independent onloads
+- line-by-line logging
