@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-operators, no-console, no-eval */
 const normalizeImage = (height, width, normalize) => {
     // Don't modify the image if no param is present
-    if (!normalize) {
+    if (typeof normalize !== 'number') {
         return [height, width];
     }
     const newWidth = normalize;
@@ -27,45 +27,54 @@ const makeImageStyles = (imageStorage, scale, normalize) => {
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
-            border: 1px solid red;
+            border: 1px solid #e15c64;
         `;
         }
         return `
             background: url(${src});
-            font-size: ${scale}px;
             padding: ${height * scale / 4}px ${width * scale / 4}px;
             margin: 5px 5px;
             background-repeat: no-repeat;
-            border: 1px solid red;
-            background-size: contain;
+            background-size: 100%;
+            font-weight: bold;
+            color: red;
         `;
     });
     return imageStyles;
 };
 
-const makePayloadArray = (imageStyles, imagesQuantity) => {
+const makePayloadArray = (imageStyles, imageStorage, log) => {
     let payloadArray = [];
     let formatString = '';
-    const directive = '%c ';
 
     // Generate directive string according to images quantity
-    for (let i = 0; i < imagesQuantity; i++) {
+    for (let i = 0; i < imageStorage.length; i++) {
+        let directive = '%c ';
+
+        const { height, width } = imageStorage[i];
+        if (log && height && width) {
+            directive = `%c${height}x${width}`;
+        }
+
         formatString = formatString.concat(directive);
     }
     payloadArray.push(formatString);
 
     // Populate payloadArray with images' styles
-    for (let i = 0; i < imagesQuantity; i++) {
+    for (let i = 0; i < imageStorage.length; i++) {
         payloadArray.push(imageStyles[i]);
     }
 
     return payloadArray;
 };
 
-const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = false } = {}) => {
-    // Log all images or first N images available according to options
-    const imagesQuantity = typeof firstN === 'number' ? firstN : imagesInput.length;
-
+const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = false, log = false } = {}) => {
+    // Log all given images or first N images available according to options
+    let imagesQuantity = imagesInput.length;
+    if (typeof firstN === 'number' && firstN <= imagesInput.length) {
+        imagesQuantity = firstN;
+    }
+    
     // Populate storage with image objects
     const urls = imagesInput.slice(0, imagesQuantity);
     let imageStorage = [];
@@ -88,10 +97,13 @@ const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = fal
             // Generate array of images' styles
             const imageStyles = makeImageStyles(imageStorage, scale, normalize);
             // Generate payload array
-            const payloadArray = makePayloadArray(imageStyles, imagesQuantity);
+            const payloadArray = makePayloadArray(imageStyles, imageStorage, log);
             // Render in console
             console.log.apply(console, payloadArray);
         });
 };
+
+// var url = 'https://static.abcteach.com/free_preview/b/bird02lowres_p.png';
+// console.log('%c100x100', `background: url(${url}); background-size: contain; background-repeat: no-repeat; font-size: 100px; color: red;`)
 
 export default consoleImages;

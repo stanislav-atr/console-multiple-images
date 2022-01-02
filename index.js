@@ -13,6 +13,6 @@ const testUrls = [
     'noImage',
     'https://cdn.pixabay.com/photo/2019/02/06/17/09/snake-3979601_1280.jpg',
     'https://cdn.pixabay.com/photo/2020/02/15/12/39/green-tree-snake-4850878_1280.jpg',
-    'https://static.abcteach.com/free_preview/b/bird02lowres_p.png',
+    //'https://static.abcteach.com/free_preview/b/bird02lowres_p.png',
 ];
-consoleImages(testUrls, { firstN: 15, normalize: 360});
+consoleImages(testUrls, { firstN: 56, normalize: 360, log: true});
