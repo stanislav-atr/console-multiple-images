@@ -4,7 +4,7 @@
  * Print images in console by given URLs with given options.
  * @param {number} height - original height of an image.
  * @param {number} width - original width of an image.
- * @param {boolean|number} normalize - number, representing width value in pixels to normalize images to, defaults to false (don't normalize);
+ * @param {boolean|number} normalize - width value in pixels to normalize images to.
  */
 const normalizeImage = (height, width, normalize) => {
     // Don't modify the image if no param is present
@@ -21,11 +21,12 @@ const normalizeImage = (height, width, normalize) => {
  * Print images in console by given URLs with given options.
  * @param {object} imageStorage - object containing Image instances.
  * @param {number} scale - scale factor, defaults to 1.
- * @param {boolean|number} normalize - number, representing width value in pixels to normalize images to, defaults to false (don't normalize);
+ * @param {boolean|number} normalize - width value in pixels to normalize images to.
  */
 const makeImageStyles = (imageStorage, scale, normalize) => {
     const imageStyles = imageStorage.map((image) => {
-        let { src, height, width } = image;
+        const { src } = image;
+        let { height, width } = image;
 
         // Normalize images to 360px width
         [height, width] = normalizeImage(height, width, normalize);
@@ -63,11 +64,11 @@ const makeImageStyles = (imageStorage, scale, normalize) => {
  * @param {boolean} log - boolean for logging images' dimensions, defaults to false.
  */
 const makePayloadArray = (imageStyles, imageStorage, log) => {
-    let payloadArray = [];
+    const payloadArray = [];
     let formatString = '';
 
     // Generate directive string according to images quantity
-    for (let i = 0; i < imageStorage.length; i++) {
+    for (let i = 0; i < imageStorage.length; i += 1) {
         let directive = '%c ';
 
         const { height, width } = imageStorage[i];
@@ -80,7 +81,7 @@ const makePayloadArray = (imageStyles, imageStorage, log) => {
     payloadArray.push(formatString);
 
     // Populate payloadArray with images' styles
-    for (let i = 0; i < imageStorage.length; i++) {
+    for (let i = 0; i < imageStorage.length; i += 1) {
         payloadArray.push(imageStyles[i]);
     }
 
@@ -92,16 +93,16 @@ const makePayloadArray = (imageStyles, imageStorage, log) => {
  * @param {array} imagesInput - array of strings containing images' URLs.
  * @param {object} options - object, representing render options.
  */
-const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = false, log = false } = {}) => {
+const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = false, log = false } = {}) => { // eslint-disable-line max-len, object-curly-newline
     // Log all given images or first N images available according to options
     let imagesQuantity = imagesInput.length;
     if (typeof firstN === 'number' && firstN <= imagesInput.length) {
         imagesQuantity = firstN;
     }
-    
+
     // Populate storage with image objects
     const urls = imagesInput.slice(0, imagesQuantity);
-    let imageStorage = [];
+    const imageStorage = [];
     for (const url of urls) {
         const image = new Image();
         image.src = url;
@@ -110,12 +111,13 @@ const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = fal
 
     // Wait for all images to load
     Promise.all(imageStorage
-        .filter(image => !image.complete)
-        .map(image => {
-            return new Promise(resolve => {
+        .filter((image) => !image.complete)
+        .map((image) => {
+            return new Promise((resolve) => {
+                image.onload = resolve;
                 // Ignore images that failed to load
-                image.onload = image.onerror = resolve;
-            })
+                image.onerror = resolve;
+            });
         }))
         .then(() => {
             // Generate array of images' styles
@@ -123,7 +125,7 @@ const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = fal
             // Generate payload array
             const payloadArray = makePayloadArray(imageStyles, imageStorage, log);
             // Render in console
-            console.log.apply(console, payloadArray);
+            console.log(...payloadArray);
         });
 };
 
