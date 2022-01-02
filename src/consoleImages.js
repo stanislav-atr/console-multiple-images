@@ -18,7 +18,7 @@ const makeImageStyles = (imageStorage, scale, normalize) => {
         [height, width] = normalizeImage(height, width, normalize);
 
         if (!height && !width) {
-            const fallbackUrl = 'https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/src/failed_to_load.svg';
+            const fallbackUrl = 'https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/assets/fallback.svg';
             return `
             background: url(${fallbackUrl});
             padding: ${50 * scale}px ${50 * scale}px;
