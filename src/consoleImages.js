@@ -1,4 +1,11 @@
-/* eslint-disable no-mixed-operators, no-console, no-eval */
+/* eslint-disable no-mixed-operators, no-console */
+
+/**
+ * Print images in console by given URLs with given options.
+ * @param {number} height - original height of an image.
+ * @param {number} width - original width of an image.
+ * @param {boolean|number} normalize - number, representing width value in pixels to normalize images to, defaults to false (don't normalize);
+ */
 const normalizeImage = (height, width, normalize) => {
     // Don't modify the image if no param is present
     if (typeof normalize !== 'number') {
@@ -10,6 +17,12 @@ const normalizeImage = (height, width, normalize) => {
     return [height / factor, width / factor];
 };
 
+/**
+ * Print images in console by given URLs with given options.
+ * @param {object} imageStorage - object containing Image instances.
+ * @param {number} scale - scale factor, defaults to 1.
+ * @param {boolean|number} normalize - number, representing width value in pixels to normalize images to, defaults to false (don't normalize);
+ */
 const makeImageStyles = (imageStorage, scale, normalize) => {
     const imageStyles = imageStorage.map((image) => {
         let { src, height, width } = image;
@@ -43,6 +56,12 @@ const makeImageStyles = (imageStorage, scale, normalize) => {
     return imageStyles;
 };
 
+/**
+ * Print images in console by given URLs with given options.
+ * @param {array} imageStyles - array of strings containing images' styles.
+ * @param {object} imageStorage - object containing Image instances.
+ * @param {boolean} log - boolean for logging images' dimensions, defaults to false.
+ */
 const makePayloadArray = (imageStyles, imageStorage, log) => {
     let payloadArray = [];
     let formatString = '';
@@ -68,6 +87,11 @@ const makePayloadArray = (imageStyles, imageStorage, log) => {
     return payloadArray;
 };
 
+/**
+ * Print images in console by given URLs with given options.
+ * @param {array} imagesInput - array of strings containing images' URLs.
+ * @param {object} options - object, representing render options.
+ */
 const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = false, log = false } = {}) => {
     // Log all given images or first N images available according to options
     let imagesQuantity = imagesInput.length;
@@ -102,8 +126,5 @@ const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = fal
             console.log.apply(console, payloadArray);
         });
 };
-
-// var url = 'https://static.abcteach.com/free_preview/b/bird02lowres_p.png';
-// console.log('%c100x100', `background: url(${url}); background-size: contain; background-repeat: no-repeat; font-size: 100px; color: red;`)
 
 export default consoleImages;
