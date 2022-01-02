@@ -9,5 +9,5 @@
 - doc everything
 - ~~handle image not loading when making styles~~
 - ~~handle firstN being more than photos count~~
-- ~~remove logging dimensions for fallback image,~~ rename to fallback.svg
+- ~~remove logging dimensions for fallback image, rename to fallback.svg~~
 - test cases
