@@ -1,9 +1,11 @@
 ## About
 Display images in browser console by an array of URLs.
 ## Install
-- ```npm i console-multiple-images```
-
-- ```import { consoleImages } from 'console-multiple-images';```
+```npm i console-multiple-images```
+ - import module and resolve dependency with tool like [Browserify](https://browserify.org/).  
+   ```import { consoleImages } from 'console-multiple-images';```
+   
+ - Use [source code](https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/src/consoleImages.js).
 ## Usage
 ```
 consoleImages(inputArray, options);
