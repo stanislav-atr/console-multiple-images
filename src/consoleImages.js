@@ -8,7 +8,7 @@
  */
 const normalizeImage = (height, width, normalize) => {
     // Don't modify the image if no param is present
-    if (typeof normalize !== 'number') {
+    if (typeof normalize !== 'number' || normalize < 0) {
         return [height, width];
     }
     const newWidth = normalize;
@@ -27,6 +27,7 @@ const makeImageStyles = (imageStorage, scale, normalize) => {
     const imageStyles = imageStorage.map((image) => {
         const { src } = image;
         let { height, width } = image;
+        const factor = typeof scale !== 'number' || scale <= 0 ? 1 : scale;
 
         // Normalize images to 360px width
         [height, width] = normalizeImage(height, width, normalize);
@@ -35,7 +36,7 @@ const makeImageStyles = (imageStorage, scale, normalize) => {
             const fallbackUrl = 'https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/assets/fallback.svg';
             return `
             background: url(${fallbackUrl});
-            padding: ${50 * scale}px ${50 * scale}px;
+            padding: ${50 * factor}px ${50 * factor}px;
             display: block !important;
             margin: 5px 5px;
             background-repeat: no-repeat;
@@ -46,7 +47,7 @@ const makeImageStyles = (imageStorage, scale, normalize) => {
         }
         return `
             background: url(${src});
-            padding: ${height * scale / 4}px ${width * scale / 4}px;
+            padding: ${height * factor / 4}px ${width * factor / 4}px;
             margin: 5px 5px;
             background-repeat: no-repeat;
             background-size: 100%;
@@ -96,7 +97,7 @@ const makePayloadArray = (imageStyles, imageStorage, log) => {
 const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = false, log = false } = {}) => { // eslint-disable-line max-len, object-curly-newline
     // Log all given images or first N images available according to options
     let imagesQuantity = imagesInput.length;
-    if (typeof firstN === 'number' && firstN <= imagesInput.length) {
+    if (typeof firstN === 'number' && firstN >= 0 && firstN <= imagesInput.length) {
         imagesQuantity = firstN;
     }
 
