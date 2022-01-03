@@ -1,13 +1,27 @@
-### TODO
-##### Main
-- ~~get rid of eval~~
-- ~~normalizing(by width) and scaling images~~
-- ~~first N images in log~~
-- ~~independent images' objects~~
-  - ~~print dimensions for each image, text should be aligned with each corresponding image~~
-##### Misc
-- ~~doc everything~~
-- ~~handle image not loading when making styles~~
-- ~~handle firstN being more than photos count~~
-- ~~remove logging dimensions for fallback image, rename to fallback.svg~~
-- ~~test cases~~
+## About
+Display images in browser console by an array of URLs.
+## Installing
+## Usage
+```
+consoleImages(inputArray, options);
+```
+```inputArray``` – array of strings, containing URLs to images to be printed.
+
+```options``` – options object, see below.
+#### Options
+```normalize``` – defaults to ```false```; pass positive px value to normalize images to (**by with**), keeping aspect ratio.
+ 
+```scale``` – defaults to ```1```; positive number, representing the factor to scale images to.
+
+```log``` – defaults to ```false```; pass true to log images' original dimensions.
+
+```firstN``` – defaults to input array length; positive whole number, describing how many images from input array should be logged.
+
+```
+consoleImages(['url1', 'url2', 'url3'], {
+  normalize: 360,  // normalize all images to 360px width, keeping aspect ratio
+  scale: 0.5,      // make printed images two times smaller
+  log: true,       // on every image printed display it's original dimensions
+  firstN: 2,       // only print first two images (from url1 & url2)
+});
+```
