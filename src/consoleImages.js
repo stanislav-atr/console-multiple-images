@@ -34,26 +34,9 @@ const makeImageStyles = (imageStorage, scale, normalize) => {
 
         if (!height && !width) {
             const fallbackUrl = 'https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/assets/fallback.svg';
-            return `
-            background: url(${fallbackUrl});
-            padding: ${50 * factor}px ${50 * factor}px;
-            display: block !important;
-            margin: 5px 5px;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            border: 1px solid #e15c64;
-        `;
+            return `background: url(${fallbackUrl});padding: ${50 * factor}px ${50 * factor}px;display: block !important;margin: 5px 5px;background-repeat: no-repeat;background-position: center;background-size: contain;border: 1px solid #e15c64;`;
         }
-        return `
-            background: url(${src});
-            padding: ${height * factor / 4}px ${width * factor / 4}px;
-            margin: 5px 5px;
-            background-repeat: no-repeat;
-            background-size: 100%;
-            font-weight: bold;
-            color: red;
-        `;
+        return `background: url(${src});padding: ${height * factor / 4}px ${width * factor / 4}px;margin: 5px 5px;background-repeat: no-repeat;background-size: 100%;font-weight: bold;color: red;`;
     });
     return imageStyles;
 };
@@ -130,4 +113,4 @@ const consoleImages = (imagesInput, { firstN = false, scale = 1, normalize = fal
         });
 };
 
-export default consoleImages;
+exports.consoleImages = consoleImages;

@@ -1,10 +1,11 @@
 import clear from 'rollup-plugin-clear';
 import cleanup from 'rollup-plugin-cleanup';
+import { terser } from "rollup-plugin-terser";
 
 export default {
-    input: './index.js',
+    input: './src/consoleImages.js',
     output: {
-        file: './dist/bundle.js',
+        file: './dist/console.multiple.images.min.js',
         format: 'cjs'
     },
     plugins: [
@@ -16,8 +17,9 @@ export default {
             watch: true,
         }),
         // Don't include comments in bundle
-        cleanup({
-            comments: 'eslint',
+        cleanup(),
+        terser({
+            module: true,
         }),
     ],
 };
