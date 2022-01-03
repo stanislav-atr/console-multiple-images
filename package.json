@@ -1,6 +1,6 @@
 {
     "name": "console-multiple-images",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Display images in browser console by an array of URLs",
     "repository": {
         "type": "git",
