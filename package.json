@@ -1,24 +1,37 @@
 {
-    "name": "smol-template",
+    "name": "console-multiple-images",
     "version": "1.0.0",
-    "description": "",
+    "description": "Display images in browser console by an array of URLs",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stanislav-atr/console-multiple-images"
+    },
+    "keywords": [
+        "console",
+        "multiple",
+        "image",
+        "iamges",
+        "chrome",
+        "devtools",
+        "logging"
+    ],
     "scripts": {
-        "webp": "webpack --config webpack.config.js",
         "roll": "rollup -c",
-        "webp-watch": "webpack --config webpack.config.js --watch",
         "roll-watch": "rollup -c 'rollup.config.js' --watch",
         "lint": "eslint ./src"
     },
-    "author": "",
-    "license": "ISC",
+    "author": "Stanislav A",
+    "license": "MIT",
+    "homepage": "https://github.com/stanislav-atr/console-multiple-images#readme",
+    "bugs": {
+        "url": "https://github.com/stanislav-atr/console-multiple-images/issues"
+      },
     "devDependencies": {
         "eslint": "^8.4.1",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-plugin-import": "^2.25.3",
         "rollup": "^2.60.1",
         "rollup-plugin-cleanup": "^3.2.1",
-        "rollup-plugin-clear": "^2.0.7",
-        "webpack": "^5.65.0",
-        "webpack-cli": "^4.9.1"
+        "rollup-plugin-clear": "^2.0.7"
     }
 }
