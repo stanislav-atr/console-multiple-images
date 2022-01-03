@@ -5,17 +5,17 @@ Display images in browser console by an array of URLs.
 ```
 consoleImages(inputArray, options);
 ```
-```inputArray``` – array of strings, containing URLs to images to be printed.
+ - ```inputArray``` – array of strings, containing URLs to images to be printed.
 
-```options``` – options object, see below.
+ - ```options``` – options object, see below.
 #### Options
-```normalize``` – defaults to ```false```; pass positive px value to normalize images to (**by with**), keeping aspect ratio.
+ - ```normalize``` – defaults to ```false```; pass positive px value to normalize images to (**by with**), keeping aspect ratio.
  
-```scale``` – defaults to ```1```; positive number, representing the factor to scale images to.
+ - ```scale``` – defaults to ```1```; positive number, representing the factor to scale images to.
 
-```log``` – defaults to ```false```; pass true to log images' original dimensions.
+ - ```log``` – defaults to ```false```; pass true to log images' original dimensions.
 
-```firstN``` – defaults to input array length; positive whole number, describing how many images from input array should be logged.
+ - ```firstN``` – defaults to input array length; positive whole number, describing how many images from input array should be logged.
 
 ```
 consoleImages(['url1', 'url2', 'url3'], {
