@@ -4,7 +4,7 @@ import clear from 'rollup-plugin-clear';
 export default {
     input: 'src/console-images.ts',
     output: {
-        file: './dist/console-images.js',
+        file: './dist/console-multiple-images.js',
         format: 'cjs',
     },
     plugins: [
