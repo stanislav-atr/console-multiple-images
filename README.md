@@ -5,7 +5,7 @@ Display images in browser console by an array of URLs.
    ```npm i console-multiple-images```  
    ```import { consoleImages } from 'console-multiple-images';```
    
- - use [source code](https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/src/consoleImages.js).
+ - use [source code](https://raw.githubusercontent.com/stanislav-atr/console-multiple-images/main/dist/console-images.js).
 ## Usage
 ```
 consoleImages(inputArray, options);
